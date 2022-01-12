@@ -1,7 +1,11 @@
 import React from "react";
-import { useState, } from "react";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useState,useEffect } from "react";
+import {
+  signInWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { Link, useNavigate,Navigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 
 function SignIn() {
@@ -11,7 +15,21 @@ function SignIn() {
   const auth = getAuth();
   const navigate = useNavigate();
 
+  
+  useEffect(() => {
 
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        navigate("/home")
+        // ...
+      } else {
+        navigate("/")
+        // ...
+      }
+    });
+  }, [])
   const login = async () => {
     try {
       const user = await signInWithEmailAndPassword(
@@ -26,7 +44,7 @@ function SignIn() {
       console.log(error);
     }
   };
-
+console.log("auth",auth.currentUser)
   return (
     <div style={{ textAlign: "center" }}>
       <div>

@@ -4,6 +4,8 @@ import BasicTable from "./Components/Table";
 import ViewOneItem from "./Components/ViewOneItem";
 import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
+import RequireAuth from "./Components/RequiredAuth";
+import NotFoundPage from "./Components/NotFoundPage";
 
 function Configuration() {
   return (
@@ -12,8 +14,11 @@ function Configuration() {
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
-        <Route path="home" element={<BasicTable />} />
+        <Route element={<RequireAuth/>}>
+          <Route path="home" element={<BasicTable />} />
+        </Route>
         <Route path="view:name" element={<ViewOneItem />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

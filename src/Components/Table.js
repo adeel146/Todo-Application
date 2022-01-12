@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState, useEffect,useMemo } from "react";
+import { useState, useEffect } from "react";
 import AlertDialog from "./Dialog";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
@@ -24,10 +24,11 @@ import db from "./FireBase";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { auth } from "./FireBase";
-import { onAuthStateChanged } from "firebase/auth";
+// import { auth } from "./FireBase";
+import { getAuth } from "firebase/auth";
 
 const BasicTable = () => {
+  const auth = getAuth()
   const [dataBase, setdataBase] = useState(auth?.currentUser?.email);
   const [data, setdata] = useState([]);
   const [input, setinput] = useState("");
@@ -43,9 +44,6 @@ const BasicTable = () => {
       });
   };
   useEffect(() => {
-    onAuthStateChanged(auth, () => {
-      setdataBase(auth?.currentUser?.email);
-    });
     onSnapshot(
       query(collection(db, `${dataBase}`), orderBy("timestamp", "desc")),
       (snapshot) =>
