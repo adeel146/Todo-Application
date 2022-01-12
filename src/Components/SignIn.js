@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, } from "react";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
@@ -10,6 +10,7 @@ function SignIn() {
   const [LoginPassword, setLoginPassword] = useState();
   const auth = getAuth();
   const navigate = useNavigate();
+
 
   const login = async () => {
     try {
@@ -31,6 +32,7 @@ function SignIn() {
       <div>
         <h3> Login </h3>
         <TextField
+          autoFocus
           placeholder="Email..."
           onChange={(event) => {
             setLoginEmail(event.target.value);
@@ -51,7 +53,7 @@ function SignIn() {
           Login
         </Button>
       </div>
-      <p style={{color:"red"}}>{error}</p>
+      <p style={{ color: "red" }}>{error}</p>
       <Link to={"/signup"}>
         <Button style={{ padding: "20px" }}> Create a User</Button>
       </Link>

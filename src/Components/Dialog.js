@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
+import { useState,memo } from "react";
 import db from "./FireBase";
 import { TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -98,4 +98,4 @@ const AlertDialog = ({ id, name, alert, dataBase }) => {
     </div>
   );
 };
-export default AlertDialog;
+export default memo(AlertDialog);

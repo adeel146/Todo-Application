@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useMemo } from "react";
 import AlertDialog from "./Dialog";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
@@ -42,7 +42,6 @@ const BasicTable = () => {
         console.log(error.message);
       });
   };
-
   useEffect(() => {
     onAuthStateChanged(auth, () => {
       setdataBase(auth?.currentUser?.email);
@@ -52,6 +51,9 @@ const BasicTable = () => {
       (snapshot) =>
         setdata(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     );
+    return ()=>{
+      setdata("")
+    }
   }, [dataBase]);
 
   let SN = 0;
@@ -62,14 +64,12 @@ const BasicTable = () => {
     await addDoc(documentReference, payload);
   };
 
-  console.log("database", dataBase);
-  console.log("data", data);
-  console.log("auth", auth?.currentUser?.email);
 
   return (
     <>
       <div style={{ textAlign: "center", marginTop: "10px" }}>
         <TextField
+        placeholder="Add ToDo"
           onChange={(e) => setinput(e.target.value)}
           value={input}
         ></TextField>
