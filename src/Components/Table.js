@@ -51,9 +51,7 @@ const BasicTable = () => {
       (snapshot) =>
         setdata(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     );
-    return ()=>{
-      setdata("")
-    }
+    
   }, [dataBase]);
 
   let SN = 0;
