@@ -1,12 +1,15 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, TextField } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
 import {
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
   getAuth,
   onAuthStateChanged,
 } from "firebase/auth";
-import { Link, useNavigate,Navigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
 
 function SignIn() {
   const [error, seterror] = useState();
@@ -15,21 +18,15 @@ function SignIn() {
   const auth = getAuth();
   const navigate = useNavigate();
 
-  
   useEffect(() => {
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        navigate("/home")
-        // ...
+        navigate("/home");
       } else {
-        navigate("/")
-        // ...
+        navigate("/");
       }
     });
-  }, [])
+  }, []);
   const login = async () => {
     try {
       const user = await signInWithEmailAndPassword(
@@ -44,7 +41,23 @@ function SignIn() {
       console.log(error);
     }
   };
-console.log("auth",auth.currentUser)
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        seterror(errorMessage);
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
+  };
+
+  console.log("auth", auth.currentUser);
   return (
     <div style={{ textAlign: "center" }}>
       <div>
@@ -72,6 +85,10 @@ console.log("auth",auth.currentUser)
         </Button>
       </div>
       <p style={{ color: "red" }}>{error}</p>
+      <Button color="inherit" variant="outlined" onClick={signInWithGoogle}>
+        Sign in with
+        <GoogleIcon />
+      </Button>
       <Link to={"/signup"}>
         <Button style={{ padding: "20px" }}> Create a User</Button>
       </Link>

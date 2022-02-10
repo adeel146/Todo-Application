@@ -54,7 +54,7 @@ const BasicTable = () => {
 
   let SN = 0;
 
-  const addtodo = async () => {
+  const addTodo = async () => {
     const documentReference = collection(db, `${dataBase}`);
     const payload = { name: input, timestamp: serverTimestamp() };
     await addDoc(documentReference, payload);
@@ -77,7 +77,7 @@ const BasicTable = () => {
           endIcon={<SendIcon />}
           onClick={() => {
             if (input.length > 0) {
-              addtodo();
+              addTodo();
               setinput("");
             }
           }}

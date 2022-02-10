@@ -1,17 +1,38 @@
-import * as React from 'react';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import { Typography } from '@mui/material'; 
-// import { Toolbar } from '@mui/material';
-
-import { AppBar,Typography } from '@mui/material';
-
+import * as React from "react";
+import { Button } from "@mui/material";
+import { signOut } from "firebase/auth";
+import { auth } from "./FireBase";
+import { useNavigate } from "react-router-dom";
+import { AppBar, Typography } from "@mui/material";
 
 export default function TodoAppBar() {
+  const navigate = useNavigate();
+  const logout = async () => {
+
+    await signOut(auth)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <AppBar position="static">
-        <Typography variant="h4" align='center' style={{padding:"20px"}}>TO DO Application</Typography>
+      <Typography variant="h4" align="center" style={{ padding: "20px" }}>
+        Group Messaging
+        {auth?.currentUser && (
+          <Button
+            style={{ float: "right" }}
+            color="inherit"
+            variant="outlined"
+            onClick={logout}
+          >
+            logout
+          </Button>
+        )}
+      </Typography>
     </AppBar>
-
   );
 }
