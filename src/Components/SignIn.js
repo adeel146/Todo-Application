@@ -19,6 +19,7 @@ function SignIn() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     onAuthStateChanged(auth, (user) => {
       if (user) {
         navigate("/home");
@@ -26,6 +27,7 @@ function SignIn() {
         navigate("/");
       }
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const login = async () => {
     try {

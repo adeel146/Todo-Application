@@ -29,11 +29,11 @@ import { getAuth } from "firebase/auth";
 
 const BasicTable = () => {
   const auth = getAuth()
-  const [dataBase, setdataBase] = useState(auth?.currentUser?.email);
+  // const [dataBase, setdataBase] = useState(auth?.currentUser?.email);
   const [data, setdata] = useState([]);
   const [input, setinput] = useState("");
   const navigate = useNavigate();
-
+const dataBase =auth?.currentUser?.email
   const logout = async () => {
     await signOut(auth)
       .then(() => {
