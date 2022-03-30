@@ -26,6 +26,7 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 // import { auth } from "./FireBase";
 import { getAuth } from "firebase/auth";
+import Container from '@mui/material/Container';
 
 const BasicTable = () => {
   const auth = getAuth()
@@ -85,11 +86,11 @@ const dataBase =auth?.currentUser?.email
           addDoc
         </Button>
       </div>
-      <div style={{ margin: "100px 25% 0 25%" }}>
+      <Container maxWidth="sm">
         <TableContainer component={Paper}>
           <Table
             sx={{
-              Width: 650,
+              maxWidth: 650,
               backgroundColor: "cornflowerblue",
               borderRadius: "10px",
             }}
@@ -138,8 +139,8 @@ const dataBase =auth?.currentUser?.email
           </Table>
         </TableContainer>
         <Button onClick={logout}>logout</Button>
-      </div>
-    </>
+        </Container>
+           </>
   );
 };
 export default BasicTable;
